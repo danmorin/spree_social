@@ -32,6 +32,13 @@ module SpreeSocial
       Spree::Ability.register_ability(Spree::SocialAbility)
     end
     config.to_prepare &method(:activate).to_proc
+
+    initializer 'spree.social' do |app|
+      require 'devise/omniauth/url_helpers'
+      ActiveSupport.on_load(:action_view) do
+        include Devise::OmniAuth::UrlHelpers
+      end
+    end
   end
 
   # We are setting these providers up regardless

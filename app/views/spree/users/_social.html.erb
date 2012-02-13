@@ -14,13 +14,16 @@
     </tr>
   </table>
 
+  <% existing_providers = [] %>
   <% if @user.user_authentications %>
     <% unless @user.user_authentications.empty? %>
       <p><strong><%= t(:you_have_signed_in_with_these_services) %>:</strong></p>
       <div class="authentications">
         <% for user_authentication in @user.user_authentications %>
+          <% existing_providers << user_authentication.provider %>
           <div class="authentication">
-            <%= image_tag File.exist?(::Rails.root+"public/assets/store/social/#{user_authentication.provider}_32.png") ? "store/social/#{user_authentication.provider}_32.png" : "store/social/spree_32.png", :size => "32x32" %>
+            <% img = Rails.application.assets.find_asset("store/social/#{user_authentication.provider}_32.png").present? ? "store/social/#{user_authentication.provider}_32.png" : "store/social/spree_32.png" %>
+            <%= image_tag(img, :size => "32x32", :alt => "#{user_authentication.provider}") %>
             <div class="provider"><%= user_authentication.provider %></div>
             <div class="uid"><%= user_authentication.nickname %></div>
             <%= link_to( "X", user_authentication, :confirm => t(:remove_authentication_option_confirmation), :method => :delete, :class => "remove") %>
@@ -29,10 +32,8 @@
         <div class="clear"></div>
       </div>
     <% end %>
-
-    <p><strong><%= t(:add_another_service_to_sign_in_with) %>:</strong></p>
   <% end %>
-  <%= render :partial => "spree/shared/socials" %>
+  <%= render :partial => "spree/shared/socials", :locals => { :existing => existing_providers , :heading => I18n.t(:add_another_service_to_sign_in_with) } %>
 </div>
 
 <div class="clear"></div>

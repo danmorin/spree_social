@@ -5,7 +5,7 @@
         <%= form_for(:user, :url => user_authentication_path(user), :html => { :method => :put }) do |f| %>
           <td><%= f.label :email, t("email") %></td>
           <td><%= f.text_field :email, :class => 'title', :value => (omniauth["extra"]["user_hash"]["email"] unless omniauth.nil? ) %></td>
-          <td><%=submit_tag t("update") %></td>
+          <td><%=submit_tag t("update"), :class => 'button primary' %></td>
         <% end %>
       <% else %>
         <td><%= t("email") %>:</td>
