@@ -6,6 +6,9 @@ Spree::UserRegistrationsController.class_eval do
         @omniauth = resp.session[:session]
         resp.session[:omniauth] = nil unless @user.new_record?
       end
+      if resource.save
+        fire_event('spree.user.signup', :user => @user)
+      end
     end
   end
 
