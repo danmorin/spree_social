@@ -1,19 +1,49 @@
 <div id="existing-customer">
-  <table>
-    <tr>
-      <% if user.anonymous? %>
-        <%= form_for(:user, :url => user_authentication_path(user), :html => { :method => :put }) do |f| %>
-          <td><%= f.label :email, t("email") %></td>
-          <td><%= f.text_field :email, :class => 'title', :value => (omniauth["extra"]["user_hash"]["email"] unless omniauth.nil? ) %></td>
-          <td><%=submit_tag t("update"), :class => 'button primary' %></td>
-        <% end %>
-      <% else %>
+  
+  <% if user.anonymous? %>
+    <%= form_for(:user, :url => user_authentication_path(user), :html => { :method => :put }) do |f| %>
+      
+      <div class="control-group">
+        <%= f.label :first_name, t(:first_name) %>
+        <div class="controls">
+          <%= f.text_field :first_name, :class => 'title', :value => (omniauth["extra"]["user_hash"]["first_name"] unless omniauth.nil?) %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :last_name, t(:last_name) %>
+        <div class="controls">
+          <%= f.text_field :last_name, :class => 'title', :value => (omniauth["extra"]["user_hash"]["last_name"] unless omniauth.nil?) %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :email, t(:email) %>
+        <div class="controls">
+          <%= f.email_field :email, :class => 'title', :value => (omniauth["extra"]["user_hash"]["email"] unless omniauth.nil?) %>
+        </div>
+      </div>
+    
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    <% end %>
+
+  <% else %>
+    <table>
+      <tr>
+        <td><%= t("name") %>:</td>
+        <td><%= user.full_name %></td>
+      </tr>
+      <tr>
         <td><%= t("email") %>:</td>
-        <td>
-          <%= user.email %>
+        <td><%= user.email %></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <p><%= link_to t('edit'), edit_account_path %></p>
         </td>
-        <td><p><%= link_to t('edit'), edit_account_path %></p></td>
-      <% end %>
-    </tr>
-  </table>
+      </tr>
+    </table>
+  <% end %>
 </div>

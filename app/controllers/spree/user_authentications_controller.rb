@@ -7,8 +7,7 @@ class Spree::UserAuthenticationsController < Spree::BaseController
 
     session[:user_access_token] = nil
 
-    @user.email = params[:user][:email]
-    if @user.save
+    if @user.update_attributes(params[:user])
       sign_in(@user, :event => :authentication) unless current_user
       redirect_back_or_default(products_path)
     else
