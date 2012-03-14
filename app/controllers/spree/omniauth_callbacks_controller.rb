@@ -32,6 +32,12 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     #signing back in from a social source
     if existing_auth
       user = existing_auth.user
+      
+    elsif omniauth['user_info'] && user = Spree::User.find_by_email(omniauth['user_info']['email'].downcase)
+      Rails.logger.error "\n\n\nFound: #{user.inspect}\n\n\n"
+      # If their email address matches their facebook email, it's safe to assume it's the user
+      # so we're not making them enter a password to authenticate first
+      # Since we assign user in the IF, there's nothing more to do here :)
     else # adding a social source
       user = current_user
     end
