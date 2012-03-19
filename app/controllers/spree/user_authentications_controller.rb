@@ -1,5 +1,4 @@
 class Spree::UserAuthenticationsController < Spree::BaseController
-
   ssl_allowed
 
   def update

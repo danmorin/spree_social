@@ -1,5 +1,6 @@
 Spree::UserSessionsController.class_eval do
-
+  ssl_allowed
+  
   def merge
     # now sign in from the login form
     authenticate_user!

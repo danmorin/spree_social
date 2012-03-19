@@ -1,5 +1,6 @@
 Spree::UserRegistrationsController.class_eval do
-
+  ssl_allowed
+  
   def create
     super.tap do |resp|
       if @user && @user.new_record? && resp.respond_to?(:session)

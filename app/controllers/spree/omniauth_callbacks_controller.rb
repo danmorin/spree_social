@@ -1,4 +1,6 @@
 class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  ssl_allowed
+  
   include Spree::Core::CurrentOrder
   include Spree::Core::ControllerHelpers
   helper 'spree/users', 'spree/base'
