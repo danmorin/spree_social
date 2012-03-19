@@ -1,11 +1,11 @@
 class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  ssl_allowed
-  
+
   include Spree::Core::CurrentOrder
   include Spree::Core::ControllerHelpers
   helper 'spree/users', 'spree/base'
 
-
+  ssl_allowed
+  
   SpreeSocial::OAUTH_PROVIDERS.each do |provider|
     method_name = (provider[1]).to_sym
     send :define_method, method_name do
