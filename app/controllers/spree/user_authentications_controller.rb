@@ -1,5 +1,7 @@
 class Spree::UserAuthenticationsController < Spree::BaseController
 
+  ssl_allowed
+
   def update
     @user = Spree::User.find(params[:id])
 
